@@ -47,7 +47,7 @@ void two(){
     }
 }
 
-void snakeArray(int** A, int n){
+void snakeArray(int** A, int n, int dir){
     int k=1;
     for(int i=0; i<n; ++i)
         if (!(i%2))
@@ -140,103 +140,61 @@ void shiftArray(int A[], int n, int k)
         cout << A[i] << " ";
 }
 
-/*void eight(int **A, int n, int m){//todo
+void eight(int **A, int n, int m){
     int k=1;
-    //сначала идем вправо потом по диагонали вниз
-    //потом идем внизу вправо по диагонали вверх
-    int i=0;
-    int j=0;
+
+    int i=0;int j=0;
     A[i][j]=k;++k;
+    A[n-1][m-1]=n*m; //маленький костыль чтобы не писать большой
 
     while(k<n*m) {
-        if (i + 1 < n && j - 1 < 0) {
+
+        if ((i + 1 < n && j - 1 < 0)|| (i + 1 < n && j+1 >= m)) {
             ++i;
             A[i][j] = k;
             ++k;
         }
 
-        else if (j + 1 < m && i - 1 < 0) {
+        else if ( (j + 1 < m && i - 1 < 0) || (j + 1 < m && i+1 >= n ) ) {
             ++j;
             A[i][j] = k;
             ++k;
         }
 
-        while (0 <= i-1 && 0 <= j-1) //диагональки
-        {--i;--j; A[i][j]=k;++k;}
+        while (0 <= i-1 && j < m-1)
+        {--i;++j; A[i][j]=k;++k;}
 
-        if (i + 1 < n && j + 1 >=n) {
+        if ((i + 1 < n && j-1 < 0) || (i + 1 < n && j+1 >= m)) {
             ++i;
             A[i][j] = k;
             ++k;
         }
 
-        else if (j + 1 < m && i + 1 >= n) {
+        else if ((j + 1 < m && i + 1 >= n) || (j + 1 < m && i-1 < 0 ) ) {
             ++j;
             A[i][j] = k;
             ++k;
         }
 
-        while (i+1 < n && j+1 < m) //диагональки
-        {++i;++j; A[i][j]=k;++k;}
+        while (i+1 < n && j > 0)
+        {++i;--j; A[i][j]=k;++k;}
 
     }
 
-    for(i=0;i<n;++i) {
-        for (j = 0; j < m; ++j)
-            cout << "\t" << A[i][j];
-        cout << endl;
-    }
-}*/
+}
 
 
 int main(){
-    int n=10; int m=10;
+    int n=15; int m=10;
     int** A=new int*[n];
     for(int i = 0; i < n; i++){
         A[i] = new int[m];
-        }
-    int k=1;
-    //сначала идем вправо потом по диагонали вниз
-    //потом идем внизу вправо по диагонали вверх
-    int i=0;
-    int j=0;
-    A[i][j]=k;++k;
-
-    while(k<n*m) {
-        if (i + 1 < n && j - 1 < 0) {
-            ++i;
-            A[i][j] = k;
-            ++k;
-        }
-
-        else if (j + 1 < m && i - 1 < 0) {
-            ++j;
-            A[i][j] = k;
-            ++k;
-        }
-
-        while (0 <= i-1 && 0 <= j-1) //диагональки
-        {--i;--j; A[i][j]=k;++k;}
-
-        if (i + 1 < n && j + 1 >=n) {
-            ++i;
-            A[i][j] = k;
-            ++k;
-        }
-
-        else if (j + 1 < m && i + 1 >= n) {
-            ++j;
-            A[i][j] = k;
-            ++k;
-        }
-
-        while (i+1 < n && j+1 < m) //диагональки
-        {++i;++j; A[i][j]=k;++k;}
-
     }
 
-    for(i=0;i<n;++i) {
-        for (j = 0; j < m; ++j)
+    eight(A,n,m);
+
+    for(int i=0;i<n;++i) {
+        for (int j = 0; j < m; ++j)
             cout << "\t" << A[i][j];
         cout << endl;
     }
