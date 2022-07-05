@@ -3,4 +3,4 @@ project(fiit)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(fiit main.cpp)
+add_executable(fiit triangles.cpp)
