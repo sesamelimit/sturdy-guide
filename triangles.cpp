@@ -22,7 +22,7 @@ void one() {
             for(int j=m-1;j>=0;--j) {
                 A[i][j]=k;
                 ++k;
-                }
+            }
 
 }
 
@@ -61,7 +61,7 @@ void snakeArray(int** A, int n, int right) { //или вправо или вни
                     A[i][j] = k;
                     ++k;
                 }
-}
+    }
     else
         for(int j=0; j<n; ++j)
             if (!(j%2))
@@ -90,33 +90,33 @@ void snail(int **A, int n, int m, int dir){ // 1 - down 0 - right
     int counter=0;
     int k=1;
     if (dir)
-    while(k<=n*m) {
-        //сверху слева направо
-        for (int i = counter; i < n - counter; ++i) {
-            A[i][counter] = k;
-            ++k;
-        }
-        //справа сверху вниз
-        for (int j = counter + 1; j < m - counter - 1; ++j) {
-            if (k<=n*m){
-            A[n - counter - 1][j] = k;
-            ++k;}
-        }
-        //снизу справа налево
-        for (int i = n - counter - 1; i > counter; --i) {
-            if (k<=n*m){
-            A[i][m - counter - 1] = k;
-            ++k;}
-        }
-        //слева снизу вверх
-        for (int j = m - counter - 1; j > counter; --j){
-            if (k<=n*m){
-            A[counter][j] = k;
-            ++k;
+        while(k<=n*m) {
+            //сверху слева направо
+            for (int i = counter; i < n - counter; ++i) {
+                A[i][counter] = k;
+                ++k;
             }
-    }
-        ++counter;
-    }
+            //справа сверху вниз
+            for (int j = counter + 1; j < m - counter - 1; ++j) {
+                if (k<=n*m){
+                    A[n - counter - 1][j] = k;
+                    ++k;}
+            }
+            //снизу справа налево
+            for (int i = n - counter - 1; i > counter; --i) {
+                if (k<=n*m){
+                    A[i][m - counter - 1] = k;
+                    ++k;}
+            }
+            //слева снизу вверх
+            for (int j = m - counter - 1; j > counter; --j){
+                if (k<=n*m){
+                    A[counter][j] = k;
+                    ++k;
+                }
+            }
+            ++counter;
+        }
     else
         while(k<=n*m) {
             //сверху слева направо
@@ -189,8 +189,8 @@ void eight(int **A, int n, int m, int dir){ //1 - down -1 - right
     int i=0;int j=0;
     A[i][j]=k;++k;
     A[n-1][m-1]=n*m; //маленький костыль чтобы не писать большой
-        while (k < n * m) {
-            if(dir==1){
+    while (k < n * m) {
+        if(dir==1){
             if ((i + 1 < n && j - 1 < 0) || (i + 1 < n && j + 1 >= m)) {
                 ++i;
                 A[i][j] = k;
@@ -200,36 +200,36 @@ void eight(int **A, int n, int m, int dir){ //1 - down -1 - right
                 A[i][j] = k;
                 ++k;
             }}
-            else {
-                if ((j + 1 < m && i - 1 < 0) || (j + 1 < m && i + 1 >= n)) {
-                    ++j;
-                    A[i][j] = k;
-                    ++k;
-                }
-                else if ((i + 1 < n && j - 1 < 0) || (i + 1 < n && j + 1 >= m)) {
-                    ++i;
-                    A[i][j] = k;
-                    ++k;
-                }
+        else {
+            if ((j + 1 < m && i - 1 < 0) || (j + 1 < m && i + 1 >= n)) {
+                ++j;
+                A[i][j] = k;
+                ++k;
             }
-            if (c==1){c=c*(-1);
+            else if ((i + 1 < n && j - 1 < 0) || (i + 1 < n && j + 1 >= m)) {
+                ++i;
+                A[i][j] = k;
+                ++k;
+            }
+        }
+        if (c==1){c=c*(-1);
             while (0 <= i - 1 && j < m - 1) {
                 --i;
                 ++j;
                 A[i][j] = k;
                 ++k;
             }
-                }
-            else if (c==-1){  c=c*(-1);
-                while (i + 1 < n && j > 0) {
-                    ++i;
-                    --j;
-                    A[i][j] = k;
-                    ++k;
-
-                }}
-
         }
+        else if (c==-1){  c=c*(-1);
+            while (i + 1 < n && j > 0) {
+                ++i;
+                --j;
+                A[i][j] = k;
+                ++k;
+
+            }}
+
+    }
 }
 
 
