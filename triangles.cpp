@@ -143,7 +143,3 @@ void six(){
     } while(i>=0);
 }
 
-int main() {
-    six();
-    return 0;
-}

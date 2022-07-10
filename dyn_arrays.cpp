@@ -231,26 +231,3 @@ void eight(int **A, int n, int m, int dir){ //1 - down -1 - right
 
     }
 }
-
-
-int main(){
-    int n=5; int m=5;
-    int** A=new int*[n];
-    for(int i = 0; i < n; i++){
-        A[i] = new int[m];
-    }
-
-    eight(A,n,m,-1);
-
-    for(int i=0;i<n;++i) {
-        for (int j = 0; j < m; ++j)
-            cout << "\t" << A[i][j];
-        cout << endl;
-    }
-
-    for (int i = 0; i < n; ++i)
-        delete[] A[i];
-    delete[] A;
-
-    return 0;
-}
