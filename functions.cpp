@@ -9,18 +9,6 @@ double** dyn_array(size_t rows, size_t columns){
     return C;
 }
 
-void dyn_array_destroy(double** M,size_t rows){
-    for (int i = 0; i < rows; ++i)
-        delete[] M[i];
-    delete[] M;
-}
-
-void print_matrix(double **M, size_t rows, size_t columns){
-    for(int i=0;i<rows;++i)
-    {for(int j=0;j<columns;++j)
-            cout << M[i][j] << "\t";
-        cout << endl;}
-}
 
 double** multMatrix(double lambda, double** M, size_t rows, size_t columns)
 {
@@ -107,12 +95,29 @@ void mixMatrix(double** M, size_t rows, size_t columns, size_t K_1, size_t K_2)
     }
 }
 
-void localMinimum(double** M, size_t rows, size_t columns);
+void localMinimum(double** M, size_t rows, size_t columns){
+    bool A[rows][columns];
 
+    for(int i=0;i<rows;++i)
+        for(int j=0;j<columns;++j)
+        {A[i][j]=true;
+            for (int a=-1;a<2 && A[i][j];++a)
+                for(int b=-1;b<2 && A[i][j];++b)
+                if (i+a>=0 && i+a < rows && j+b >=0 && j+b < columns && !(a==0&&b==0))
+                        if(M[i][j]>=M[i+a][j+b])
+                            A[i][j]=false;}
+
+    for(int i=0;i<rows;++i)
+        for(int j=0;j<columns;++j)
+            if (A[i][j])
+                M[i][j]=0;
+
+}
+double det(double** M, size_t size);
 double det(double** M, size_t size){
     if (size==2)
         return M[0][0]*M[1][1] - M[0][1]*M[1][0];
-    double d=0;
+    double det=0;
 
     for(size_t n=0;n<size;++n){
         if (M[0][n]!=0) {
@@ -124,12 +129,11 @@ double det(double** M, size_t size){
                     else if (j > n)
                         minor[i][j] = M[i + 1][j - 1];
 
-            d += pow(-1, 1 + n) * M[0][n] * det(minor, size - 1);
-            dyn_array_destroy(minor,size-1);
+            det += pow(-1, 1 + n) * M[0][n] * det(minor, size - 1);
         }
     }
 
-    return d;
+    return det;
 }
 
 
