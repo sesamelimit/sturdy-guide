@@ -19,8 +19,3 @@ void taylor(double x_1,double x_2, double dx, double eps){
         cout << x << "\t" << f << "\t" << sin(x) << endl;
     }
 }
-
-int main(){
-    taylor(0,1,0.1,0.001);
-    return 0;
-}
