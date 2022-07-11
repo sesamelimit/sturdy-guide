@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-void one(){
+void t_one(){
     int x;
     cin >> x;
     if(x<27)
@@ -12,7 +12,7 @@ void one(){
         }
 }
 
-void two(){
+void t_two(){
     int x;
     cin >> x;
     for(int i=0;i<x;++i) {
@@ -29,7 +29,7 @@ void two(){
     }
 }
 
-void three(){
+void t_three(){
     int x;
     cin >> x;
     if(x==1) {
@@ -55,7 +55,7 @@ void three(){
     } while(i>=0);
 }
 
-void four(){
+void t_four(){
     int x;
     int y;
     cin >> x;
@@ -84,7 +84,7 @@ void four(){
     } while(i>=0);
 }
 
-void five() {
+void t_five() {
     int x;
     cin >> x;
     if(x==1) {
@@ -112,7 +112,7 @@ void five() {
     } while(i>=0);
 }
 
-void six(){
+void t_six(){
     int x;
     cin >> x;
     if(x==1) {

@@ -249,19 +249,3 @@ double** inv(double** M, size_t size){
     return inv;
 
 }
-
-int main(){
-    size_t rows = 4;
-    size_t columns = 4;
-    auto A = dyn_array(rows,columns);
-
-    for(size_t i=0;i<rows;++i)
-        for(size_t j=0;j<columns;++j)
-            A[i][j]=(i+j)/2 + i + j;
-    A[0][0]=1;
-    auto A_inv=inv(A,rows);
-    print_matrix(multMatrix(A,A_inv,rows,rows,rows),rows,rows);
-    dyn_array_destroy(A,rows);
-    dyn_array_destroy(A_inv,rows);
-    return 0;
-}
