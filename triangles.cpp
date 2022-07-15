@@ -142,4 +142,3 @@ void t_six(){
         i=i+sgn;
     } while(i>=0);
 }
-
