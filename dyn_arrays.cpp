@@ -1,84 +1,79 @@
 #include <iostream>
 #include <random>
-#define rows 5
-#define columns 6
 
 unsigned int** one() {
-    size_t n=rows; //высота столбца
-    size_t m=columns; //длина строки
-    int direction;
-   /* std::cout << "input n" << std::endl;
+    size_t n; //высота столбца
+    size_t m; //длина строки
+    bool direction;
+    std::cout << "input n" << std::endl;
     std::cin >> n;
     std::cout << "input m" << std::endl;
     std::cin >> m;
     std::cout << "0 for right ; 1 for left" << std::endl;
-    */std::cin >> direction;
+    std::cin >> direction;
 
     unsigned int** A = new unsigned int* [n];
     for (size_t i = 0; i < n; i++) {
         A[i] = new unsigned int[m];
     }
 
-    int k=1;
-    for(size_t i = 0; i < n; ++i)
+    int k = 1;
+    for (size_t i = 0; i < n; ++i)
         if (!((i + direction) % 2))
-            for(size_t j = 0;j < m;++j)
+            for (size_t j = 0; j < m; ++j)
             {
-                A[i][j]=k;
+                A[i][j] = k;
                 ++k;
             }
         else
-            for(size_t j = m - 1;j != -1;--j)
+            for (size_t j = m - 1; j != -1; --j)
             {
-                A[i][j]=k;
+                A[i][j] = k;
                 ++k;
             }
     return A;
 
 }
 
-unsigned int** two(){
+unsigned int** two() {
     std::random_device dev;
     std::mt19937 gen(dev());
     std::uniform_int_distribution<> distr(0, 100000);
 
-    size_t n=rows;
-    size_t m=columns;
-    /*std::cout << "input n" << std::endl;
+    size_t n;
+    size_t m;
+    std::cout << "input n" << std::endl;
     std::cin >> n;
     std::cout << "input m" << std::endl;
-    std::cin >> m;*/
+    std::cin >> m;
 
     unsigned int** A = new unsigned int* [n];
     for (size_t i = 0; i < n; i++) {
         A[i] = new unsigned int[m];
     }
 
-    for(size_t i = 0; i < n;++i)
-        for(size_t j = 0;j < m;++j)
-            A[i][j]=distr(gen);
+    for (size_t i = 0; i < n; ++i)
+        for (size_t j = 0; j < m; ++j)
+            A[i][j] = distr(gen);
     return A;
 }
 
-void snakeArray(int** A, size_t n, size_t right) { //или вправо или вниз
+void snakeArray(int** A, size_t n, bool right) { //или вправо или вниз
     int k = 1;
-        for (size_t i = 0; i < n; ++i)
-                for (size_t j = (n-1)*(i%2); 0 <=j && j < n; j += (-1)*(i%2) + (i+1)%2 )
-                {
-                    if (right) 
-                        A[i][j] = k;
-                    else
-                        A[j][i] = k;
-                    ++k;
-                }
-                
+    for (size_t i = 0; i < n; ++i)
+        for (size_t j = (n - 1) * (i % 2); 0 <= j && j < n; j += (-1) * (i % 2) + (i + 1) % 2)
+        {
+            (right? A[i][j]  : A[j][i] ) = k;
+            ++k;
+        }
+
 
 }
 
-double mysqrt(double x, double eps=1e-6){
+double mysqrt(double x, double eps = 1e-6) {
     double z_1 = 1;
     double z_2 = z_1 - (z_1 * z_1 - x) / (2 * z_1);
-    while( std::abs(z_2 - z_1) > eps)
+    while (std::abs(z_2 - z_1) > eps)
     {
         z_1 = z_2;
         z_2 = z_1 - (z_1 * z_1 - x) / (2 * z_1);
@@ -86,66 +81,61 @@ double mysqrt(double x, double eps=1e-6){
     return z_2;
 }
 
-void snail(int **A, size_t n, size_t m, int dir){ // 1 - down 0 - right
+void snail(int** A, size_t n, size_t m, bool dir) { // 1 - down 0 - right
     int counter = 0;
     int k = 1;
-        while(k <= n*m) {
-            //сверху слева направо
-            for (size_t i = counter; i < dir*n + ((dir+1)%2)*m - counter; ++i)
-            {
-                if (dir) A[i][counter] = k;
-                else A[counter][i] = k;
+    while (k <= n * m) {
+        //сверху слева направо
+        for (size_t i = counter; i < dir * n + ((dir + 1) % 2) * m - counter; ++i)
+        {
+            (dir ? A[i][counter] : A[counter][i]) = k;
+            ++k;
+        }
+        //справа сверху вниз
+        for (size_t j = counter + 1; j < dir * m + ((dir + 1) % 2) * n - counter - 1; ++j) {
+            if (k <= n * m) {
+                (dir ? A[n - counter - 1][j] : A[j][m - counter - 1]) = k;
                 ++k;
             }
-            //справа сверху вниз
-            for (size_t j = counter + 1; j < dir*m + ((dir + 1) % 2) *n - counter - 1; ++j) {
-                if (k <= n * m){
-                    if (dir) A[n - counter - 1][j] = k;
-                    else A[j][m - counter - 1] = k;
-                    ++k;
-                }
-            }
-            //снизу справа налево
-            for (size_t i = dir * n + ((dir + 1) % 2) * m - counter - 1; i > counter; --i) {
-                if (k <= n * m){
-                    if(dir) A[i][m - counter - 1] = k;
-                    else A[n - counter - 1][i] = k;
-                    ++k;
-                }
-            }
-            //слева снизу вверх
-            for (size_t j = dir * m + ((dir + 1) % 2) * n - counter - 1; j > counter; --j){
-                if (k <= n*m){
-                    if(dir) A[counter][j] = k;
-                    else A[j][counter] = k;
-                    ++k;
-                }
-            }
-
-            ++counter;
         }
-    
+        //снизу справа налево
+        for (size_t i = dir * n + ((dir + 1) % 2) * m - counter - 1; i > counter; --i) {
+            if (k <= n * m) {
+                (dir ? A[i][m - counter - 1] : A[n - counter - 1][i]) = k;
+                ++k;
+            }
+        }
+        //слева снизу вверх
+        for (size_t j = dir * m + ((dir + 1) % 2) * n - counter - 1; j > counter; --j) {
+            if (k <= n * m) {
+                (dir ? A[counter][j] : A[j][counter]) = k;
+                ++k;
+            }
+        }
+        ++counter;
+    }
+
 }
 
-unsigned int** six(){
+unsigned int** six() {
     std::random_device dev;
     std::mt19937 gen(dev());
     std::uniform_int_distribution<> distr(0, 100000);
-    size_t n=rows;
-    size_t m=columns;
-   /* std::cout << "input n" << std::endl;
+    size_t n;
+    size_t m;
+    std::cout << "input n" << std::endl;
     std::cin >> n;
     std::cout << "input m" << std::endl;
-    std::cin >> m;*/
+    std::cin >> m;
 
     unsigned int** A = new unsigned int* [n];
     for (size_t i = 0; i < n; i++) {
         A[i] = new unsigned int[m];
     }
-    for(size_t i = 0; i < n; ++i)
-        for(size_t j = 0; j < m; ++j)
-            A[i][j]=distr(gen);
-    for(size_t i = 0; i < n; ++i) {
+    for (size_t i = 0; i < n; ++i)
+        for (size_t j = 0; j < m; ++j)
+            A[i][j] = distr(gen);
+    for (size_t i = 0; i < n; ++i) {
         for (size_t j = 0; j < m; ++j) {
             std::cout.width(6);
             std::cout << std::right << A[i][j];
@@ -155,28 +145,46 @@ unsigned int** six(){
     return A;
 }
 
-void shiftArray(int A[], int n, int k)
+bool is_simple(int n)
 {
-    for (size_t t = 1; t <= k; ++t)
-    {
-        int temp = A[0];
-        for (size_t i = 0; i < n-1; ++i)
-            A[i] = A[i+1];
-        A[n - 1] = temp;
-    }
+    for (int i = 2; i <= sqrt(n); ++i)
+        if (!(n - (n / i) * i))
+            return false;
+    return true;
 }
 
-void eight(int **A, size_t n, size_t m, int dir){ //1 - down -1 - right
-    int k=1;
-    int c=dir;
-    size_t i=0;
-    size_t j=0;
-    A[i][j]=k;
+void shiftArray(int A[], int n, int k)
+{
+    if (!k) return;
+    k = k - n * (k / n);
+
+    for (int t = 0; t < k; ++t) {
+    int i = t;
+    int temp = A[i];
+    do {
+        i = (i - k >= 0 ? i - k : n - k + i);
+        int temp2 = A[i];
+        A[i] = temp;
+        temp = temp2;
+    } while (i != t);
+    if (is_simple(k) && (n % k)) return;
+}
+
+
+}
+
+
+void eight(int** A, size_t n, size_t m, bool dir) { //1 - down -1 - right
+    int k = 1;
+    int c = dir;
+    size_t i = 0;
+    size_t j = 0;
+    A[i][j] = k;
     ++k;
-    A[n-1][m-1]=n*m; //маленький костыль чтобы не писать большой
+    A[n - 1][m - 1] = n * m; //маленький костыль чтобы не писать большой
 
     while (k < n * m) {
-        if(dir == 1){
+        if (dir == 1) {
             if ((i + 1 < n && j - 1 < 0) || (i + 1 < n && j + 1 >= m)) {
                 ++i;
                 A[i][j] = k;
@@ -202,7 +210,7 @@ void eight(int **A, size_t n, size_t m, int dir){ //1 - down -1 - right
             }
         }
 
-        if (c == 1){
+        if (c == 1) {
             c *= -1;
             while (0 <= i - 1 && j < m - 1) {
                 --i;
@@ -212,7 +220,7 @@ void eight(int **A, size_t n, size_t m, int dir){ //1 - down -1 - right
             }
         }
 
-        else if (c == -1){
+        else if (c == -1) {
             c *= -1;
             while (i + 1 < n && j > 0) {
                 ++i;
@@ -225,16 +233,16 @@ void eight(int **A, size_t n, size_t m, int dir){ //1 - down -1 - right
 }
 
 int main() {
-    size_t n = rows;
-    size_t m = columns;
-    int C[rows];
-    for (size_t i = 0; i < rows; ++i)
-        C[i] = i;
-    for (size_t i = 0; i < rows; ++i)
-        std::cout << C[i]<<" ";
-    std::cout << std::endl;
-    shiftArray(C, n, 3);
-    for (size_t i = 0; i < rows; ++i)
-        std::cout << C[i];
+    const int n = 12;
+    int A[n];
+    for (int j = 0; j < n; ++j) {
+        std::cout << "j = " << j << std::endl;
+        for (size_t i = 0; i < n; ++i)
+            A[i] = i;
+        shiftArray(A, n, j);
+        for (size_t i = 0; i < n; ++i)
+            std::cout << A[i] << std::endl;
+        std::cout << std::endl;
+    }
     return 0;
 }
