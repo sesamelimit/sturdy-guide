@@ -235,18 +235,3 @@ void eight(int** A, size_t n, size_t m, bool dir) { //1 - down -1 - right
         }
     }
 }
-
-int main() {
-    const int n = 16;
-    int A[n];
-    for (int j = 0; j < n; ++j) {
-        std::cout << "j = " << j << std::endl;
-        for (size_t i = 0; i < n; ++i)
-            A[i] = i;
-        shiftArray(A, n, j);
-        for (size_t i = 0; i < n; ++i)
-            std::cout << A[i] << std::endl;
-        std::cout << std::endl;
-    }
-    return 0;
-}
