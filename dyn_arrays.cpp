@@ -145,34 +145,38 @@ unsigned int** six() {
     return A;
 }
 
-bool is_simple(int n)
+void reverseArray(int A[], size_t n)
 {
-    for (int i = 2; i <= sqrt(n); ++i)
-        if (!(n - (n / i) * i))
-            return false;
-    return true;
+    int temp;
+    for(int i=0;i<=n/2;++i)
+    {
+        temp=A[i];
+        A[i]=A[n-1-i];
+        A[n-1-i]=temp;
+    }
 }
+
 
 void shiftArray(int A[], int n, int k)
 {
+    int c=0;
     if (!k) return;
     k = k - n * (k / n);
 
-    for (int t = 0; t < k; ++t) {
-    int i = t;
-    int temp = A[i];
-    do {
-        i = (i - k >= 0 ? i - k : n - k + i);
-        int temp2 = A[i];
-        A[i] = temp;
-        temp = temp2;
-    } while (i != t);
-    if (is_simple(k) && (n % k)) return;
-}
+    for (int t = n - k; t < n && c<n; ++t) {
+        int i = t;
+        int temp = A[i];
+        do {
+            i = (i - k >= 0 ? i - k : n - k + i);
+            int temp2 = A[i];
+            A[i] = temp;
+            ++c;
+            temp = temp2;
+        } while (i != t);
+    }
 
 
 }
-
 
 void eight(int** A, size_t n, size_t m, bool dir) { //1 - down -1 - right
     int k = 1;
@@ -233,7 +237,7 @@ void eight(int** A, size_t n, size_t m, bool dir) { //1 - down -1 - right
 }
 
 int main() {
-    const int n = 12;
+    const int n = 16;
     int A[n];
     for (int j = 0; j < n; ++j) {
         std::cout << "j = " << j << std::endl;
