@@ -235,3 +235,41 @@ void eight(int** A, size_t n, size_t m, bool dir) { //1 - down -1 - right
         }
     }
 }
+
+std::string reverse_words(std::string str)
+{
+  if (str=="") return "";
+    unsigned long i;i=0;
+    unsigned long beg;
+    unsigned long end;
+
+    while(i<str.length()-1)
+    {
+        while(str[i]==' ')
+            ++i;
+        beg=i;
+
+        while(i<=str.length()-1 && str[i]!=' ')
+            ++i;
+        end=i;
+
+        if(end-beg>1){
+            std::string temp(end-beg,'*');
+            for(i=0;i<end-beg;++i)
+                temp[i]=str[i+beg];
+            for(i=0;i<end-beg;++i)
+                str[i+beg]=temp[end-beg-i-1];
+        }
+    i=end;
+    }
+    return str;
+}
+
+std::string reverseString (std::string str )
+{
+  std::string temp=str;
+  for(unsigned long i=0; i<str.length();++i)
+   str[i]=temp[str.length()-1-i];
+    
+  return str ;
+}
