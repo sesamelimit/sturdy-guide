@@ -148,7 +148,7 @@ unsigned int** six() {
 void reverseArray(int A[], size_t n)
 {
     int temp;
-    for(int i=0;i<=n/2;++i)
+    for(int i=0;i<n/2;++i)
     {
         temp=A[i];
         A[i]=A[n-1-i];
