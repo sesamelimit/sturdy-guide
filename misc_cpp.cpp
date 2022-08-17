@@ -3,8 +3,13 @@
 using namespace std;
 
 void char_out(){
-    for(unsigned char c = 0; c < 255; ++c)
-        cout << c << "\t";
+    unsigned char c=0;
+    do {
+        cout << (int)c << "\t";
+        ++c;
+    }
+    while (c!=0);
+
     return;
 }
 
@@ -22,11 +27,10 @@ void graph() {
     int width = 41;
     bool map[height][width];
     int c = 0;
-    for(double x = -1.5; x <= 1.5; x += 3.0/40) {
-        cout << x << " " << endl;
+    for(double x = -1.5; x <= 1.5; x += 3.0 / 40) {
         ++c;
         int c_2=0;
-        for (double y = 1.5; y >= -1.5; y -= 3.0 / 20){
+        for (double y = -1.5; y <= 1.5 && c_2<20; y += 3.0 / 20){
             map[c_2][c] = ((x*x + y*y - 1) * (x*x + y*y - 1) * (x*x + y*y - 1) - x * x * y * y * y <= 0);
             ++c_2;
         }
@@ -41,13 +45,10 @@ void graph() {
 
 unsigned long dots(double R)
 {
-    unsigned long c=0;
-    for(long x = -(int)R; x <= (int)R; ++x){
-        for(long y = -(int)sqrt(R * R - x * x); y <= (int)sqrt(R * R - x * x); ++y)
-            if ((x * x + y * y) <= R * R)
-                ++c;
-    }
-    return c;
+    unsigned int sum=2;
+    for(double y=R; y>-R; --y)
+        sum+=(unsigned int)(2*sqrt(R*R-y*y));
+    return sum;
 }
 
 void foobar(){

@@ -236,9 +236,9 @@ void eight(int** A, size_t n, size_t m, bool dir) { //1 - down -1 - right
     }
 }
 
-std::string reverse_words(std::string str)
+std::string reverse_words_1(std::string str)
 {
-  if (str=="") return "";
+    if (str=="") return "";
     unsigned long i;i=0;
     unsigned long beg;
     unsigned long end;
@@ -254,22 +254,30 @@ std::string reverse_words(std::string str)
         end=i;
 
         if(end-beg>1){
-            std::string temp(end-beg,'*');
-            for(i=0;i<end-beg;++i)
-                temp[i]=str[i+beg];
-            for(i=0;i<end-beg;++i)
-                str[i+beg]=temp[end-beg-i-1];
+            char temp;
+            for(i=beg;i<beg+(end-beg)/2;++i)
+            { temp=str[i];
+            str[i]=str[end-i+beg-1];
+            str[end-i+beg-1]=temp;}
         }
-    i=end;
+        i=end;
     }
     return str;
 }
 
-std::string reverseString (std::string str )
+std::string reverseString(std::string str )
 {
-  std::string temp=str;
-  for(unsigned long i=0; i<str.length();++i)
-   str[i]=temp[str.length()-1-i];
-    
-  return str ;
+    char temp;
+    for(unsigned long i=0; i<str.length()/2;++i)
+    { temp=str[i];
+        str[i]=str[str.length()-i-1];
+        str[str.length()-i-1]=temp;}
+
+    return str ;
+}
+
+std::string reverse_words_2(std::string str) {
+    str=reverseString(str);
+    str=reverse_words_1(str);
+    return str;
 }

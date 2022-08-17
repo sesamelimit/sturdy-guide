@@ -3,10 +3,10 @@
 using namespace std;
 
 int files_1(){
-    char* filename = new char[255];
+    char filename[255];
     cin >> filename;
 
-    char* filename2 = new char[255];
+    char filename2[255];
     cin >> filename2;
 
     ifstream(fin);
@@ -39,16 +39,13 @@ int files_1(){
 
     fin.close();
     fout.close();
-
-    delete[] filename;
-    delete[] filename2;
     return 0;
 }
 
 int files_2(){
-    char* filename = new char[255];
+    char filename[255];
     cin >> filename;
-    char* filename2 = new char[255];
+    char filename2[255];
     cin >> filename2;
 
     ifstream(fin);
