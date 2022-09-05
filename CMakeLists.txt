@@ -3,4 +3,4 @@ project(fiit)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(fiit functions.cpp dyn_arrays.cpp files.cpp triangles.cpp loops.cpp misc_cpp.cpp sailstar.cpp)
+add_executable(fiit misc_cpp.cpp base64.cpp dyn_arrays.cpp files.cpp functions.cpp loops.cpp sailstar.cpp triangles.cpp)
